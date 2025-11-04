@@ -440,7 +440,35 @@ distance_km = distance_degrees * 111.32  # Convert to kilometers</code>
 - Distance displayed in popup
 
 
+# 8. Security Considerations
+###  Input Validation
+<p>Coordinate Validation</p>
+<code>if not (-90 <= lat <= 90):
+    return Response({'error': 'Invalid latitude'}, status=400)
+if not (-180 <= lng <= 180):
+    return Response({'error': 'Invalid longitude'}, status=400)</code>
+<p>Radius Validation</p>
+<code>if radius_km <= 0 or radius_km > 20:
+    return Response({'error': 'Invalid radius'}, status=400)</code>
+
+### SQL Injection Prevention
+<p>Django ORM provides automatic parameterization</p>
+<code># Safe - parameterized query
+CoffeeShop.objects.filter(location__distance_lte=(point, distance))
+
+# Unsafe - never do this
+CoffeeShop.objects.raw(f"SELECT * FROM shops WHERE ST_Distance(...) < {user_input}")</code>
 
 
+### CSRF Protection
+<code> @csrf_exempt  # Disabled for development
+def api_view(request):
+    pass</code>
 
+### CORS Configuration
+- Development (allows all origins)
+- Production (whitelist specific domains)
 
+  ### API Rate Limiting
+
+  ### Database credentials in environment variables
