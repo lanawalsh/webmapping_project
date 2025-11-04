@@ -2,14 +2,14 @@
 
 # Table of Contents
 
-1. [Introduction & Project Overview
-2. [System Architecture & Technology Stack
-3. [Database Design & Spatial Data Management
-4. [Backend Implementation (Django MVC
-5. [API Design & RESTful Endpoints
-6. [Frontend Development & User Interface
-7. [Spatial Query Implementation
-8. [Security Considerations
+1. Introduction & Project Overview
+2. System Architecture & Technology Stack
+3. Database Design & Spatial Data Management
+4. Backend Implementation (Django MVC
+5. API Design & RESTful Endpoints
+6. Frontend Development & User Interface
+7. Spatial Query Implementation
+8. Security Considerations
 
 # Introduction & Project Overview
 <p>The application implements three primary spatial operations</p>
@@ -254,6 +254,125 @@ CORS Configuration</p>
 <code>CORS_ALLOW_ALL_ORIGINS = True  # Development only
 # Production should whitelist specific origins
 </code>
+
+
+#6.Frontend Development & User Interface
+<p>The interface uses Bootstrap 5's grid system and components for responsive layout
+</p>
+<code><div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <!-- Map container -->
+    </div>
+  </div>
+</div>
+</code>
+### Responsive Breakpoints:
+Desktop (>992px): Full control panel and results sidebar
+Tablet (768-992px): Stacked controls, optimized map
+Mobile (<768px): Touch-optimized buttons, full-screen map
+</p>
+    
+###  Bootstrap Components Used
+- Navigation bar for branding
+- Form controls for user input
+- Cards for results display
+- Alerts for notifications
+- Buttons with icon integration
+
+### Leaflet.js Map Integration
+<p>Map Initialization</p>
+<code>const map = L.map('map').setView([53.3498, -6.2603], 13);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors',
+    maxZoom: 19
+}).addTo(map);
+</code>
+
+### Layer Management:
+<p> The application uses separate layers for different marker types:
+<code> const coffeeLayer = L.layerGroup().addTo(map);  // Brown coffee icons
+const searchLayer = L.layerGroup().addTo(map);  // Search results</code>
+
+
+### Custom Markers:
+<p> Coffee shop markers use custom div icons:
+<code> const icon = L.divIcon({
+    className: 'coffee-marker',
+    html: '<div class="coffee-icon"><i class="fas fa-mug-hot"></i></div>',
+    iconSize: [25, 25],
+    iconAnchor: [12.5, 12.5]
+});
+</code>
+
+### Result markers are numbered for easy identification
+<code> const marker = L.divIcon({
+    html: `<div class="nearest-marker">${rank}</div>`,
+    iconSize: [28, 28]
+});</code>
+
+###User Interface Components
+<p>Control Panel</p>
+- Mode selector dropdown (Nearest/Radius/Distance)
+- Dynamic settings based on selected mode
+- Input validation feedback
+- Clear results button
+
+<p>Results Panel </p>
+- Collapsible sidebar
+- Scrollable results list
+- Click-to-zoom functionality 
+- Distance badges for quick reference
+
+<p>Visual Feedback</p>
+- Loading states during API calls
+- Error alerts for invalid input
+- Success notifications
+- Animated markers for search points
+
+### JavaScript Architecture
+<code> document.getElementById('search-mode').addEventListener('change', (e) => {
+    currentMode = e.target.value;
+    updateUI();
+});
+
+map.on('click', (e) => {
+    handleMapClick(e.latlng.lat, e.latlng.lng);
+});
+
+
+Asynchronous API Calls
+async function findNearest(lat, lng) {
+    try {
+        const response = await fetch('/coffee/api/nearest/', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({lat, lng, limit: 5})
+        });
+        
+        const data = await response.json();
+        displayResults(data);
+    } catch (error) {
+        alert('Error: ' + error.message);
+    }
+}
+
+</code>
+
+### State Management
+<code> let currentMode = 'nearest';
+let distanceModeShops = [];
+let radiusCircle = null;</code>
+
+### Accessibility Features- ARIA Labels
+<code> <button aria-label="Find nearest coffee shops">
+    Search
+</button></code>
+
+
+
+
 
 
 
