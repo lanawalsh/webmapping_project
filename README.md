@@ -61,6 +61,16 @@ The application follows a three-tier architecture</p>
 <img width="278" height="198" alt="image" src="https://github.com/user-attachments/assets/52e2ee78-da9c-4a88-9a3b-63aef53d41ba" />
 
 <p>The application includes 16 coffee shops across Dublin set up like this 
+    <code>  {
+                'name': '3fe Coffee',
+                'address': '32 Grand Canal Street Lower',
+                'area': 'Grand Canal Dock',
+                'location': Point(-6.2405, 53.3361, srid=4326),
+                'rating': 4.6,
+                'wifi': True,
+                'outdoor_seating': False,
+                'description': 'Specialty coffee roaster with excellent espresso'
+            },</code>
 </p>
 
 <p>A Django management command (load_coffee_shops.py) populates the database</p>
