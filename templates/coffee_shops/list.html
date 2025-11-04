@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dublin Coffee Shops - List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'coffee_shops:map' %}">
+                <i class="fas fa-coffee"></i> Dublin Coffee Finder
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="{% url 'coffee_shops:map' %}">
+                    <i class="fas fa-map"></i> Map View
+                </a>
+                <a class="nav-link active" href="{% url 'coffee_shops:list' %}">
+                    <i class="fas fa-list"></i> List View
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row mb-4">
+            <div class="col-12">
+                <h1><i class="fas fa-coffee"></i> Dublin Coffee Shops</h1>
+                <p class="text-muted">{{ shops.count }} coffee shops in our database</p>
+            </div>
+        </div>
+
+        <div class="row">
+            {% for shop in shops %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="fas fa-mug-hot text-primary"></i> {{ shop.name }}
+                        </h5>
+                        <p class="card-text">
+                            <small class="text-muted">
+                                <i class="fas fa-map-marker-alt"></i> {{ shop.address }}
+                            </small>
+                        </p>
+                        <p class="card-text">
+                            <small class="text-muted">
+                                <i class="fas fa-location-dot"></i> {{ shop.area }}
+                            </small>
+                        </p>
+                        
+                        {% if shop.rating %}
+                        <div class="mb-2">
+                            <i class="fas fa-star text-warning"></i>
+                            <strong>{{ shop.rating }}/5</strong>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="mb-2">
+                            {% if shop.wifi %}
+                            <span class="badge bg-info">
+                                <i class="fas fa-wifi"></i> WiFi
+                            </span>
+                            {% endif %}
+                            {% if shop.outdoor_seating %}
+                            <span class="badge bg-success">
+                                <i class="fas fa-tree"></i> Outdoor
+                            </span>
+                            {% endif %}
+                        </div>
+                        
+                        {% if shop.description %}
+                        <p class="card-text small">{{ shop.description }}</p>
+                        {% endif %}
+                        
+                        <a href="{% url 'coffee_shops:map' %}?lat={{ shop.latitude }}&lng={{ shop.longitude }}" 
+                           class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-map-marked-alt"></i> View on Map
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="alert alert-info">
+                    <h5>No coffee shops found</h5>
+                    <p>Run the following command to load sample data:</p>
+                    <code>python manage.py load_coffee_shops</code>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

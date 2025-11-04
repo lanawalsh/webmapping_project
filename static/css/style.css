@@ -1,0 +1,145 @@
+.proximity-results-panel {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+    width: 320px;
+    max-height: 70vh;
+    overflow-y: auto;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    display: none;
+}
+
+.proximity-results-panel .card {
+    border: none;
+}
+
+.proximity-results-panel .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #007bff;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 8px 8px 0 0;
+}
+
+.proximity-results-panel .card-header h5 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.proximity-results-panel .card-body {
+    padding: 10px 12px;
+}
+
+.proximity-results-panel .results-list {
+    margin-top: 6px;
+}
+
+.proximity-results-panel .result-item {
+    padding: 6px 4px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.proximity-results-panel .result-item:hover {
+    background-color: #f0f8ff;
+}
+
+/* Close button inside panel */
+.proximity-results-panel .btn-close {
+    background: transparent;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: #fff;
+}
+
+/* =========================================================
+   Numbered Marker
+   ========================================================= */
+.numbered-marker {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #007bff;
+    color: white;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    width: 30px;
+    height: 30px;
+    font-weight: bold;
+    text-align: center;
+    font-size: 14px;
+    box-shadow: 0 0 3px rgba(0,0,0,0.5);
+}
+
+/* Marker popup styling */
+.coffee-popup h6 {
+    margin: 0 0 4px 0;
+    font-size: 16px;
+}
+
+.coffee-popup p {
+    margin: 2px 0;
+    font-size: 14px;
+}
+
+.coffee-popup button {
+    margin-top: 4px;
+    font-size: 12px;
+    padding: 4px 6px;
+}
+
+/* Optional: smaller map control button style */
+.btn {
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid #007bff;
+    background-color: #fff;
+    color: #007bff;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.btn:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+.btn-outline-primary {
+    background-color: #fff;
+    color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-outline-primary:hover {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+/* Radius input styling */
+#radius-input {
+    padding: 4px 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
