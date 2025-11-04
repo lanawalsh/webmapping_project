@@ -1,6 +1,6 @@
-##Web mapping assignment</H1>
+# Web mapping assignment</H1>
 
-# Table of Contents
+## Table of Contents
 
 1. Introduction & Project Overview
 2. System Architecture & Technology Stack
