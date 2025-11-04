@@ -312,7 +312,7 @@ const searchLayer = L.layerGroup().addTo(map);  // Search results</code>
     iconSize: [28, 28]
 });</code>
 
-###User Interface Components
+### User Interface Components
 <p>Control Panel</p>
 - Mode selector dropdown (Nearest/Radius/Distance)
 - Dynamic settings based on selected mode
@@ -366,10 +366,78 @@ let distanceModeShops = [];
 let radiusCircle = null;</code>
 
 ### Accessibility Features- ARIA Labels
-<code> <button aria-label="Find nearest coffee shops">
+<code> 
+<button aria-label="Find nearest coffee shops">
     Search
-</button></code>
+</button>
+</code>
 
+# Spatial Query Implementation
+### Proximity Search (K-Nearest Neighbors)
+<code>
+search_point = Point(lng, lat, srid=4326)
+
+nearest_shops = CoffeeShop.objects.annotate(
+    distance=Distance('location', search_point)
+).order_by('distance')[:limit]
+</code>
+
+<p>
+    How It Works
+</p>
+ 1. User clicks on map, providing coordinates
+2.  JavaScript sends POST request with lat/lng
+3. Django creates PostGIS Point geometry
+4. Distance() function annotates each shop with calculated distance
+5. Results ordered by distance
+6. Response includes distance in km and meters
+<p>Visual Representation</p>
+- Red marker at search point
+- Green numbered markers for results
+- Results sorted by proximity in sidebar
+
+
+### Radius Search (Buffer Query)
+<code>search_point = Point(lng, lat, srid=4326)
+
+shops_in_radius = CoffeeShop.objects.filter(
+    location__distance_lte=(search_point, D(km=radius_km))
+).annotate(
+    distance=Distance('location', search_point)
+).order_by('distance')</code>
+
+<p>
+    How It Works:
+</p>
+1. User specifies radius
+2. User clicks map for center point
+3. PostGIS creates circular buffer zone
+4. ST_DWithin() tests if shop locations fall within buffer
+5. Results include all shops meeting criteria
+6. Sorted by distance from center
+
+<p>Visual Representation</p>
+- Green circle overlay showing search radius
+- Red center marker
+- Blue numbered markers for shops within radius
+
+### Distance Calculation Between Two Points
+<code>shop1 = CoffeeShop.objects.get(id=shop1_id)
+shop2 = CoffeeShop.objects.get(id=shop2_id)
+
+distance_degrees = shop1.location.distance(shop2.location)
+distance_km = distance_degrees * 111.32  # Convert to kilometers</code>
+
+<p>How it works</p>
+1. User clicks first coffee shop marker
+2. Application stores first selection
+3. User clicks second coffee shop marker
+4. API call with both shop IDs
+5. PostGIS calculates geodesic distance
+6. Response includes multiple units (km, m, miles)
+<p>Visual Representation</p>
+- Dashed red line connecting two shops
+- Distance displayed in popup
 
 
 
