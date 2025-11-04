@@ -472,3 +472,13 @@ def api_view(request):
   ### API Rate Limiting
 
   ### Database credentials in environment variables
+
+
+### Future developments
+1. allow users to add data points
+2. Filtering based on cariera - rating/wifi/outdoor seating
+3. contarnize the site, database and backend
+4. include walking times for distance between shops
+5. Make a coffee shop walking route
+6. Notifications of events going on in local shops
+7. Find a data set that i can use
