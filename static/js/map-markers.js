@@ -1,4 +1,3 @@
-// Map Markers and Display Functions
 
 /**
  * Load all coffee shops from API and display on map
@@ -8,19 +7,39 @@ async function loadCoffeeShops() {
         const response = await fetch('/coffee/api/all/');
         const data = await response.json();
         
+        // Store all shops globally
         allCoffeeShops = data.features;
-        coffeeLayer.clearLayers();
         
-        data.features.forEach(feature => {
-            addCoffeeMarker(feature);
-        });
+        console.log(`Loaded ${allCoffeeShops.length} coffee shops`);
         
+        // Update header count
         document.getElementById('shop-count').textContent = 
             `${data.features.length} coffee shops in Dublin`;
+        
+        // Display all shops initially (no filters applied)
+        displayAllShops();
             
     } catch (error) {
         console.error('Error loading coffee shops:', error);
         document.getElementById('shop-count').textContent = 'Error loading shops';
+    }
+}
+
+/**
+ * Display all coffee shops on the map
+ * (Used on initial load before any filters are applied)
+ */
+function displayAllShops() {
+    coffeeLayer.clearLayers();
+    
+    allCoffeeShops.forEach(feature => {
+        addCoffeeMarker(feature);
+    });
+    
+    // Initialize filter count
+    const filterCountEl = document.getElementById('filter-count');
+    if (filterCountEl) {
+        filterCountEl.textContent = allCoffeeShops.length;
     }
 }
 

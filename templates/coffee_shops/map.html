@@ -57,6 +57,54 @@
             </div>
         </div>
 
+        <!-- Filters Section -->
+        <div class="filters-section control-group">
+            <hr class="my-4">
+            <h6 class="mb-3"><i class="fas fa-filter"></i> Filter Coffee Shops</h6>
+            
+            <!-- Rating Filter -->
+            <div class="mb-3">
+                <label class="form-label">Minimum Rating:</label>
+                <select id="rating-filter" class="form-select">
+                    <option value="0">All Ratings</option>
+                    <option value="3.0">3.0+ Stars</option>
+                    <option value="3.5">3.5+ Stars</option>
+                    <option value="4.0">4.0+ Stars</option>
+                    <option value="4.5">4.5+ Stars</option>
+                </select>
+            </div>
+            
+            <!-- WiFi Filter -->
+            <div class="mb-3">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="wifi-filter">
+                    <label class="form-check-label" for="wifi-filter">
+                        <i class="fas fa-wifi text-primary"></i> Has WiFi
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Outdoor Seating Filter -->
+            <div class="mb-3">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="outdoor-filter">
+                    <label class="form-check-label" for="outdoor-filter">
+                        <i class="fas fa-tree text-success"></i> Has Outdoor Seating
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Filter Stats -->
+            <div class="alert alert-light py-2 small mt-3">
+                <strong id="filter-count">100</strong> shops match your filters
+            </div>
+            
+            <!-- Clear Filters Button -->
+            <button id="clear-filters-btn" class="btn btn-outline-primary w-100 mb-2">
+                <i class="fas fa-redo"></i> Reset Filters
+            </button>
+        </div>
+
         <!-- Clear Button -->
         <button id="clear-btn" class="btn btn-outline-secondary w-100 mt-3">
             <i class="fas fa-times"></i> Clear Results
@@ -85,5 +133,6 @@
 <script src="{% static 'js/map-config.js' %}"></script>
 <script src="{% static 'js/map-markers.js' %}"></script>
 <script src="{% static 'js/search-handlers.js' %}"></script>
+<script src="{% static 'js/filters.js' %}"></script>
 <script src="{% static 'js/map-init.js' %}"></script>
 {% endblock %}
