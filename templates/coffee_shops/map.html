@@ -6,6 +6,7 @@
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/map.css' %}">
 <link rel="stylesheet" href="{% static 'css/neighborhoods.css' %}">
+<link rel="stylesheet" href="{% static 'css/routes.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -57,6 +58,10 @@
                 <div id="distance-text"></div>
             </div>
         </div>
+        <!-- Clear Button -->
+        <button id="clear-btn" class="btn btn-outline-secondary w-100 mt-3">
+            <i class="fas fa-times"></i> Clear Results
+        </button>
 
 
 
@@ -108,10 +113,6 @@
             </button>
         </div>
 
-        <!-- Clear Button -->
-        <button id="clear-btn" class="btn btn-outline-secondary w-100 mt-3">
-            <i class="fas fa-times"></i> Clear Results
-        </button>
     </div>
 
     <!-- Map Container -->
@@ -140,4 +141,5 @@
 <script src="{% static 'js/map-init.js' %}"></script>
 <script src="{% static 'js/neighborhoods-data.js' %}"></script>
 <script src="{% static 'js/neighborhoods.js' %}"></script>
+<script src="{% static 'js/routes.js' %}"></script>
 {% endblock %}

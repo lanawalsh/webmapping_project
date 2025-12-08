@@ -160,6 +160,12 @@ function initializeApp() {
                 initializeNeighborhoods();
                 console.log('✅ Neighborhoods ready');
             }
+
+            // Initialize routes
+            if (typeof initializeRoutes === 'function') {
+                initializeRoutes();
+                console.log('✅ Routes ready');
+            }
             
             console.log('🎉 Application ready!');
         })

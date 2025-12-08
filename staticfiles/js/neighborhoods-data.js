@@ -133,18 +133,36 @@ const dublinNeighborhoods = {
         {
             "type": "Feature",
             "properties": {
-                "name": "Drumcondra",
-                "area_code": "D09",
-                "color": "#34495e"
+                "name": "Dalkey",
+                "area_code": "D04",
+                "color": "#ea8aefff"
             },
             "geometry": {
                 "type": "Polygon",
                 "coordinates": [[
-                    [-6.2650, 53.3650],
-                    [-6.2500, 53.3650],
-                    [-6.2500, 53.3750],
-                    [-6.2650, 53.3750],
-                    [-6.2650, 53.3650]
+                    [-6.1215, 53.2795], 
+                    [-6.1200, 53.2795], 
+                    [-6.1200, 53.2802], 
+                    [-6.1215, 53.2802], 
+                    [-6.1215, 53.2795]
+                ]]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Dún Laoghaire",
+                "area_code": "Dún Laoghaire",
+                "color": "#a3e19cff"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [[
+                    [-6.1350, 53.2935], 
+                    [-6.1275, 53.2935], 
+                    [-6.1275, 53.2960], 
+                    [-6.1350, 53.2960], 
+                    [-6.1350, 53.2935]
                 ]]
             }
         }

@@ -45,11 +45,14 @@ function loadNeighborhoodPolygons() {
         polygon.bindPopup(`
             <strong>${props.name}</strong><br>
             <span class="badge bg-secondary">${props.area_code}</span><br>
-            <button class="btn btn-sm btn-primary mt-2" onclick="filterByNeighborhood('${props.name}')">
-                Show Coffee Shops Here
+            <button class="btn btn-sm btn-primary mt-2 w-100" onclick="filterByNeighborhood('${props.name}')">
+                <i class="fas fa-filter"></i> Show Coffee Shops
+            </button>
+            <button class="btn btn-sm btn-success mt-1 w-100 btn-plan-route" onclick="planWalkingRoute('${props.name}')">
+                <i class="fas fa-route"></i> Plan Walking Route
             </button>
         `);
-        
+                
         // Hover effects
         polygon.on('mouseover', function(e) {
             this.setStyle({
