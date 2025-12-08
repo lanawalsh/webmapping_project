@@ -1,5 +1,3 @@
-
-
 /**
  * Handle search mode change
  */
@@ -145,13 +143,30 @@ function initializeApp() {
                 console.error('❌ Filter system failed to initialize');
             }
             
+            // Step 3: Initialize submissions (if available)
+            if (typeof initializeSubmissions === 'function') {
+                initializeSubmissions();
+                console.log('✅ Submissions ready');
+            }
+            
+            // Step 4: Update map click handler for submission mode
+            if (typeof updateMapClickHandler === 'function') {
+                updateMapClickHandler();
+                console.log('✅ Map click handler updated');
+            }
+            
+            // Step 5: Initialize neighborhoods
+            if (typeof initializeNeighborhoods === 'function') {
+                initializeNeighborhoods();
+                console.log('✅ Neighborhoods ready');
+            }
+            
             console.log('🎉 Application ready!');
         })
         .catch(error => {
             console.error('❌ Failed to load coffee shops:', error);
         });
 }
-
 
 // Wait for DOM to be fully loaded
 if (document.readyState === 'loading') {

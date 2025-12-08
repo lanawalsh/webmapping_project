@@ -1,0 +1,112 @@
+
+/* Neighborhood Toggle Section */
+.control-group h6 {
+    color: #495057;
+    font-weight: 600;
+}
+
+/* Neighborhood Legend */
+.neighborhood-legend {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    bottom: 30px;
+    left: 10px;
+    z-index: 1000;
+    max-width: 250px;
+}
+
+.neighborhood-legend h6 {
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #333;
+}
+
+.neighborhood-legend ul {
+    margin: 0;
+    padding: 0;
+}
+
+.neighborhood-legend li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.legend-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    margin-right: 8px;
+    border: 2px solid white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Neighborhood Toggle Switch */
+.form-check-input:checked {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+/* Neighborhood Info Alert */
+.alert-light.small {
+    font-size: 0.875rem;
+    padding: 0.5rem;
+    margin-bottom: 0;
+}
+
+/* Popup Button Styles */
+.leaflet-popup-content button {
+    transition: all 0.2s ease;
+}
+
+.leaflet-popup-content button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Neighborhood Filter Notification */
+.alert.position-fixed h6 {
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+}
+
+.alert.position-fixed .btn-sm {
+    font-size: 0.875rem;
+    padding: 0.25rem 0.5rem;
+}
+
+/* Polygon Hover Cursor */
+.leaflet-interactive {
+    cursor: pointer;
+}
+
+/* Loading State */
+.neighborhoods-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .neighborhood-legend {
+        max-width: 200px;
+        font-size: 12px;
+        padding: 10px;
+    }
+    
+    .legend-color {
+        width: 15px;
+        height: 15px;
+    }
+}

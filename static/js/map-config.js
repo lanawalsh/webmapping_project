@@ -1,4 +1,5 @@
 // Map Configuration and Global Variables
+let neighborhoodsLayer = L.layerGroup();
 
 // Initialize map centered on Dublin
 const map = L.map('map').setView([53.3498, -6.2603], 13);
