@@ -1,20 +1,23 @@
 import os
 from pathlib import Path
+from decouple import config, Csv
+import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-# GDAL and PROJ libraries for GeoDjango
-GDAL_LIBRARY_PATH = "C:\Program Files\GDAL\gdal.dll"
-GEOS_LIBRARY_PATH = "C:\Program Files\GDAL\geos_c.dll"
-PROJ_LIBRARY_PATH = "C:\Program Files\GDAL\projlib"
 
+# GDAL and PROJ libraries for GeoDjango (LOCAL ONLY - not needed in Docker)
+if os.name == 'nt':  # Windows
+    GDAL_LIBRARY_PATH = r"C:\Program Files\GDAL\gdal.dll"
+    GEOS_LIBRARY_PATH = r"C:\Program Files\GDAL\geos_c.dll"
+    PROJ_LIBRARY_PATH = r"C:\Program Files\GDAL\projlib"
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'your-secret-key-here'
+SECRET_KEY = config('SECRET_KEY', default='your-secret-key-here-change-in-production')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1', cast=Csv())
 
 # Application definition
 INSTALLED_APPS = [
@@ -34,14 +37,13 @@ INSTALLED_APPS = [
     
     # Local apps
     'maps',
-    #project app
     'coffee_shops',
-    
 ]
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Add WhiteNoise for Docker
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -70,17 +72,20 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'webmapping_project.wsgi.application'
 
-# Database configuration for PostGIS
+# Database configuration - Works for both local and Docker
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'webmapping_db1',
-        'USER': 'webmapping1',
-        'PASSWORD': 'awm123',
-        'HOST': 'localhost',
-        'PORT': '5433',
-    }
+    'default': dj_database_url.config(
+        default=config(
+            'DATABASE_URL',
+            default='postgis://webmapping1:awm123@localhost:5433/webmapping_db1'
+        ),
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
 }
+
+# Ensure PostGIS engine
+DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
 # Internationalization
 LANGUAGE_CODE = 'en-us'
@@ -94,6 +99,9 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+
+# WhiteNoise configuration for serving static files in production
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Media files
 MEDIA_URL = '/media/'
@@ -113,6 +121,32 @@ REST_FRAMEWORK = {
     ],
 }
 
-# CORS settings for development
-CORS_ALLOW_ALL_ORIGINS = True
+# CORS settings
+CORS_ALLOW_ALL_ORIGINS = config('CORS_ALLOW_ALL_ORIGINS', default=True, cast=bool)
 CORS_ALLOW_CREDENTIALS = True
+
+# Security settings for production
+if not DEBUG:
+    SECURE_BROWSER_XSS_FILTER = True
+    X_FRAME_OPTIONS = 'DENY'
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    
+    # Uncomment when using HTTPS in production
+    # SECURE_SSL_REDIRECT = True
+    # SESSION_COOKIE_SECURE = True
+    # CSRF_COOKIE_SECURE = True
+
+# Logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO' if not DEBUG else 'DEBUG',
+    },
+}
