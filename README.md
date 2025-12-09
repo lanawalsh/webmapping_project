@@ -30,6 +30,7 @@ The application implements three primary spatial operations:
 5. Leaflet.js mapping integration
 6. Cross-platform compatibility
 7. Local deployment capability
+8. Docker containers for each teir
 
 ---
 
