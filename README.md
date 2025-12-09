@@ -964,6 +964,8 @@ document.getElementById('filter').addEventListener('change', applyFilters);
  Database            Management
 
 ```
+![Screenshot 2025-12-08 233342](https://github.com/user-attachments/assets/fe905fdc-c0c2-44ea-bd70-5d17a25f314c)
+
 ---
 ### Docker Compose Configuration
 
@@ -1157,7 +1159,11 @@ docker-compose logs -f
 # Stop services
 docker-compose down
 ```
+![Screenshot 2025-12-08 233403](https://github.com/user-attachments/assets/e1e28331-8a24-4024-aec0-a2406deda4ef)
+![Screenshot 2025-12-08 234301](https://github.com/user-attachments/assets/f26f0c5a-9d8c-4abd-a3e8-f9061e5d58b8)
 
+
+---
 ## AWS ECS Deployment
 I attempted two strategies for cloud deployment 
 1. ECS (Fargate) + ECR
@@ -1198,6 +1204,16 @@ Fargate tasks require one of the following for external access:
 - `ERR_CONNECTION_TIMED_OUT` in browser
 - No response from `curl` or `telnet` commands
 
+![Screenshot 2025-12-09 012117](https://github.com/user-attachments/assets/74505d82-a155-4ba0-807e-275b81908724)
+![Screenshot 2025-12-09 012136](https://github.com/user-attachments/assets/b2481756-2697-45d1-a819-81ea0daa56c7)
+![Screenshot 2025-12-09 013111](https://github.com/user-attachments/assets/a71de8a0-ab56-497b-ac1c-69dbe582cb61)
+![Screenshot 2025-12-09 013453](https://github.com/user-attachments/assets/b80f2895-f3b2-40d0-bc37-f00cdec28d2c)
+
+
+
+![Screenshot 2025-12-09 012845](https://github.com/user-attachments/assets/59d7f5b2-3b68-4f75-bb25-cc7260e3aa2a)
+
+
 ---
 
 ### Deployment Strategy 2: EC2 Instance (Manual Deployment)
@@ -1237,8 +1253,15 @@ The EC2 instance was launched in the ECS-created VPC, and the subnets were **pri
 -  ** Confirmed the Instance Had a Public IP
 -   **Attempted Fresh Instances
 -    **Attempted to Update and Install Packages Internally
+
+  ![Screenshot 2025-12-09 175533](https://github.com/user-attachments/assets/e687516c-8d5e-4515-ba15-196a932ddec1)
+
+  ![Screenshot 2025-12-09 175354](https://github.com/user-attachments/assets/b8c3a7f3-2658-4fb1-94da-14b0d35f9be0)
+
+
+
  
-![Screenshot 2025-12-09 175533](https://github.com/user-attachments/assets/3aec5cd7-b73e-4918-81c0-e16b17c3dd94)
+
 
 
 **Result:**
@@ -1396,6 +1419,16 @@ I installed all required software:
 -  **Platform-tools** (adb, fastboot)  
 -  **Gradle** (6.9, 7.6)  
 -  **Cordova CLI** (12.0.0)  
+
+<img width="653" height="42" alt="image" src="https://github.com/user-attachments/assets/8f9012e3-92ae-4868-a584-24db88802128" />
+
+<img width="647" height="301" alt="image" src="https://github.com/user-attachments/assets/cca48f24-5e42-4b75-baab-b1734d7c6fd2" />
+
+<img width="332" height="59" alt="image" src="https://github.com/user-attachments/assets/b1c6d776-650a-4377-80e2-6074b402b787" />
+
+<img width="193" height="245" alt="image" src="https://github.com/user-attachments/assets/ca56e7db-1fc9-484b-bfc7-8009b43bc9ff" />
+
+
 
 
 ---
