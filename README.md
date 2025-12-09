@@ -962,6 +962,9 @@ document.getElementById('filter').addEventListener('change', applyFilters);
 │Port:5432│◄────────┤  Port:5050  │
 └─────────┘         └─────────────┘
  Database            Management
+
+```
+---
 ### Docker Compose Configuration
 
 ```yaml
@@ -1063,7 +1066,7 @@ networks:
 ### Dockerfile
 
 ```dockerfile
-FROM python:3.9-slim
+
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
