@@ -1,89 +1,119 @@
-# Web mapping assignment</H1>
+# Web Mapping Assignment
 
 ## Table of Contents
 
-1. Introduction & Project Overview
-2. System Architecture & Technology Stack
-3. Database Design & Spatial Data Management
-4. Backend Implementation (Django MVC
-5. API Design & RESTful Endpoints
-6. Frontend Development & User Interface
-7. Spatial Query Implementation
-8. Security Considerations
+1. [Introduction & Project Overview](#introduction--project-overview)
+2. [System Architecture & Technology Stack](#system-architecture--technology-stack)
+3. [Database Design & Spatial Data Management](#database-design--spatial-data-management)
+4. [Backend Implementation (Django MVC)](#backend-implementation-django-mvc)
+5. [API Design & RESTful Endpoints](#api-design--restful-endpoints)
+6. [Frontend Development & User Interface](#frontend-development--user-interface)
+7. [Spatial Query Implementation](#spatial-query-implementation)
+8. [Security Considerations](#security-considerations)
 
-# Introduction & Project Overview
-<p>The application implements three primary spatial operations</p>
+---
 
-1. Proximity Search (K-Nearest Neighbors): Finds the N nearest coffee shops to any point on the map, ranked by distance
-2. Radius Search (Buffer Query): Discovers all coffee shops within a user-defined circular area
-3. Distance Calculation: Measures the precise distance between any two coffee shop locations
+## 1. Introduction & Project Overview
 
-<p>Technical Requirements Met</p>
+The application implements three primary spatial operations:
+
+1. **Proximity Search (K-Nearest Neighbors):** Finds the N nearest coffee shops to any point on the map, ranked by distance
+2. **Radius Search (Buffer Query):** Discovers all coffee shops within a user-defined circular area
+3. **Distance Calculation:** Measures the precise distance between any two coffee shop locations
+
+### Technical Requirements Met
+
 1. PostgreSQL/PostGIS spatial database implementation
 2. Django MVC architecture
 3. RESTful API design
 4. Responsive Bootstrap 5 interface
 5. Leaflet.js mapping integration
 6. Cross-platform compatibility
-7. local deployment capability
+7. Local deployment capability
 
-#2. System Architecture & Technology Stack
-<p> Overall Architecture
-The application follows a three-tier architecture</p>
-<p>Presentation Layer</p>
+---
+
+## 2. System Architecture & Technology Stack
+
+### Overall Architecture
+
+The application follows a three-tier architecture:
+
+#### Presentation Layer
+
 - HTML5, CSS3, JavaScript
 - Bootstrap 5 for responsive design
 - Leaflet.js for interactive mapping
 - Font Awesome for icons
 
-<p>Application layer</p>
+#### Application Layer
+
 - Django 4.2+ web framework
 - Django REST Framework for API
 - GeoDjango for spatial operations
 - Python 3.9.6
 
-<p>Data Layer</p>
+#### Data Layer
+
 - PostgreSQL 17
 - PostGIS
 - Spatial indexing
-<p>PostgreSQL/PostGIS: spatial data support, including advanced geometry operations, spatial indexing, and distance calculations. PostGIS provides SQL functions like ST_Distance, ST_DWithin, and ST_Within that are essential for location-based queries.
-</p>
-<p>Django/GeoDjango: clean MVC architecture with built-in spatial database support.
-</p>
-<p>Leaflet.js: lightweight, extensive documentation, and mobile-friendly design. Leaflet is open-source and works  with OpenStreetMap tiles.
-</p>
-<p>Bootstrap 5: Ensures responsive design with minimal custom CSS, providing a consistent user experience across devices without requiring extensive frontend framework knowledge.
-</p>
 
-#Database Design & Spatial Data Management
-<p>The core data model revolves around the CoffeeShop table, which stores both traditional attributes and spatial geometry
-</p>
-<img width="278" height="198" alt="image" src="https://github.com/user-attachments/assets/52e2ee78-da9c-4a88-9a3b-63aef53d41ba" />
+### Technology Justification
 
-<p>The application includes 100 coffee shops across Dublin set up like this 
-    <code>  {
-                'name': '3fe Coffee',
-                'address': '32 Grand Canal Street Lower',
-                'area': 'Grand Canal Dock',
-                'location': Point(-6.2405, 53.3361, srid=4326),
-                'rating': 4.6,
-                'wifi': True,
-                'outdoor_seating': False,
-                'description': 'Specialty coffee roaster with excellent espresso'
-            },</code>
-</p>
+**PostgreSQL/PostGIS:** Provides spatial data support, including advanced geometry operations, spatial indexing, and distance calculations. PostGIS provides SQL functions like `ST_Distance`, `ST_DWithin`, and `ST_Within` that are essential for location-based queries.
 
-<p>A Django management command (load_coffee_shops.py) populates the database</p>
-<code>python manage.py load_coffee_shops </code>
+**Django/GeoDjango:** Offers clean MVC architecture with built-in spatial database support.
 
-<p>this command Reads structured Python data
-Creates PostGIS Point geometries
-Uses get_or_create() to prevent duplicates
-Provides console feedback on success/failure
-</p>
-<p>The application follows Django's MTV (Model-Template-View) pattern, which is Django's implementation of MVC
-</p>
-<code>Model (models.py)
+**Leaflet.js:** Lightweight, extensive documentation, and mobile-friendly design. Leaflet is open-source and works with OpenStreetMap tiles.
+
+**Bootstrap 5:** Ensures responsive design with minimal custom CSS, providing a consistent user experience across devices without requiring extensive frontend framework knowledge.
+
+---
+
+## 3. Database Design & Spatial Data Management
+
+The core data model revolves around the `CoffeeShop` table, which stores both traditional attributes and spatial geometry.
+
+![Database Schema](https://github.com/user-attachments/assets/52e2ee78-da9c-4a88-9a3b-63aef53d41ba)
+
+### Sample Data Structure
+
+The application includes 100 coffee shops across Dublin set up like this:
+```python
+{
+    'name': '3fe Coffee',
+    'address': '32 Grand Canal Street Lower',
+    'area': 'Grand Canal Dock',
+    'location': Point(-6.2405, 53.3361, srid=4326),
+    'rating': 4.6,
+    'wifi': True,
+    'outdoor_seating': False,
+    'description': 'Specialty coffee roaster with excellent espresso'
+}
+```
+
+### Data Population
+
+A Django management command (`load_coffee_shops.py`) populates the database:
+```bash
+python manage.py load_coffee_shops
+```
+
+This command:
+- Reads structured Python data
+- Creates PostGIS Point geometries
+- Uses `get_or_create()` to prevent duplicates
+- Provides console feedback on success/failure
+
+---
+
+## 4. Backend Implementation (Django MVC)
+
+The application follows Django's MTV (Model-Template-View) pattern, which is Django's implementation of MVC.
+
+### Model (models.py)
+```python
 class CoffeeShop(models.Model):
     name = models.CharField(max_length=200)
     address = models.CharField(max_length=300)
@@ -104,18 +134,18 @@ class CoffeeShop(models.Model):
     @property
     def longitude(self):
         return self.location.x if self.location else None
-</code>
-<p>Key Model Features:
+```
 
-Uses models.PointField from GeoDjango for spatial data
-Includes property methods for convenient coordinate access
-Provides automatic timestamp management
-Implements __str__ for admin interface readability
+**Key Model Features:**
+- Uses `models.PointField` from GeoDjango for spatial data
+- Includes property methods for convenient coordinate access
+- Provides automatic timestamp management
+- Implements `__str__` for admin interface readability
 
-</p>
+### Views (views.py)
 
-<code>views (views.py)
-Django views handle HTTP requests and orchestrate data retrieval
+Django views handle HTTP requests and orchestrate data retrieval:
+```python
 @api_view(['POST'])
 @csrf_exempt
 def find_nearest_coffee(request):
@@ -129,35 +159,35 @@ def find_nearest_coffee(request):
     nearest_shops = CoffeeShop.objects.annotate(
         distance=Distance('location', search_point)
     ).order_by('distance')[:limit]
-</code>
+```
 
 ### Templates (map.html)
-<p>The template layer provides the HTML structure and includes JavaScript for interactivity. Django's template engine allows for dynamic content rendering, though this application primarily uses client-side rendering via JavaScript.</p>
+
+The template layer provides the HTML structure and includes JavaScript for interactivity. Django's template engine allows for dynamic content rendering, though this application primarily uses client-side rendering via JavaScript.
 
 ### URL Configuration
-<p>Django's URL dispatcher maps URLs to views</p>
-<code>urlpatterns = [
+
+Django's URL dispatcher maps URLs to views:
+```python
+urlpatterns = [
     path('', views.map_view, name='map'),
     path('api/all/', views.all_coffee_shops, name='all_shops'),
     path('api/nearest/', views.find_nearest_coffee, name='nearest'),
     path('api/radius/', views.coffee_within_radius, name='radius'),
-    path('api/distance/<int:shop1_id>/<int:shop2_id>/', 
+    path('api/distance///', 
          views.distance_between_shops, name='distance_between'),
 ]
-</code>
+```
 
-<p>URL Design Principles:
+**URL Design Principles:**
+- RESTful conventions (resources as nouns)
+- Clear, descriptive endpoint names
+- Consistent URL structure
+- URL parameters for resource identification
 
-RESTful conventions (resources as nouns)
-Clear, descriptive endpoint names
-Consistent URL structure
-URL parameters for resource identification
-
-</p>
-
-### 
-Django Settings Configuration
-<p>INSTALLED_APPS = [
+### Django Settings Configuration
+```python
+INSTALLED_APPS = [
     'django.contrib.gis',  # GeoDjango
     'rest_framework',      # API framework
     'corsheaders',         # Cross-origin support
@@ -174,25 +204,30 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+```
 
-</p>
+---
 
-# API Design & RESTful Endpoints
-## API Architecture
-<p>The application exposes a RESTful API using Django REST Framework, following REST principles:
-</p>
-1. Stateless: Each request contains all necessary information
-2. Resource-based: URLs represent resources (coffee shops)
-3. Standard HTTP methods: GET for retrieval, POST for searches
-4. JSON format: Consistent data exchange format
+## 5. API Design & RESTful Endpoints
+
+### API Architecture
+
+The application exposes a RESTful API using Django REST Framework, following REST principles:
+
+1. **Stateless:** Each request contains all necessary information
+2. **Resource-based:** URLs represent resources (coffee shops)
+3. **Standard HTTP methods:** GET for retrieval, POST for searches
+4. **JSON format:** Consistent data exchange format
 
 ### Endpoint Documentation
-<p>Get All Coffee Shops</p>
-- GET /coffee/api/all/
--  Response Format
 
-<code>
-  {
+#### Get All Coffee Shops
+
+**Endpoint:** `GET /coffee/api/all/`
+
+**Response Format:**
+```json
+{
   "type": "FeatureCollection",
   "features": [
     {
@@ -213,20 +248,24 @@ DATABASES = {
     }
   ]
 }
-</code>
-<p>Find Nearest Coffee Shops</p>
-- POST /coffee/api/nearest/
-<p>request</p>
-<code>
-  {
+```
+
+#### Find Nearest Coffee Shops
+
+**Endpoint:** `POST /coffee/api/nearest/`
+
+**Request:**
+```json
+{
   "lat": 53.3498,
   "lng": -6.2603,
   "limit": 5
 }
-</code>
-<p>responce</p>
-<code> 
-  {
+```
+
+**Response:**
+```json
+{
   "search_point": {"lat": 53.3498, "lng": -6.2603},
   "total_found": 5,
   "nearest_shops": [
@@ -242,48 +281,57 @@ DATABASES = {
       "rating": 4.4
     }
   ]
+}
+```
 
-</code>
-<p>SQL Query Generated</p>
-<code>sqlSELECT *, ST_Distance(location::geography, 
+**SQL Query Generated:**
+```sql
+SELECT *, ST_Distance(location::geography, 
        ST_SetSRID(ST_MakePoint(-6.2603, 53.3498), 4326)::geography) as distance
 FROM coffee_shops_coffeeshop
 ORDER BY distance
 LIMIT 5;
-</code>
+```
 
 ### API Security Considerations
-<p>CSRF Protection</p>
-<code>@csrf_exempt  # For development
+
+#### CSRF Protection
+```python
+@csrf_exempt  # For development
 def api_view(request):
     # In production, use proper CSRF tokens
-    pass</code>
+    pass
+```
 
-<p>
-CORS Configuration</p>
-<code>CORS_ALLOW_ALL_ORIGINS = True  # Development only
+#### CORS Configuration
+```python
+CORS_ALLOW_ALL_ORIGINS = True  # Development only
 # Production should whitelist specific origins
-</code>
+```
 
+---
 
-#6.Frontend Development & User Interface
-<p>The interface uses Bootstrap 5's grid system and components for responsive layout
-</p>
-<code><div class="container-fluid">
-  <div class="row">
-    <div class="col-12">
-      <!-- Map container -->
-    </div>
-  </div>
-</div>
-</code>
-### Responsive Breakpoints:
-Desktop (>992px): Full control panel and results sidebar
-Tablet (768-992px): Stacked controls, optimized map
-Mobile (<768px): Touch-optimized buttons, full-screen map
-</p>
+## 6. Frontend Development & User Interface
+
+The interface uses Bootstrap 5's grid system and components for responsive layout:
+```html
+
+  
     
-###  Bootstrap Components Used
+      
+    
+  
+
+```
+
+### Responsive Breakpoints
+
+- **Desktop (>992px):** Full control panel and results sidebar
+- **Tablet (768-992px):** Stacked controls, optimized map
+- **Mobile (<768px):** Touch-optimized buttons, full-screen map
+
+### Bootstrap Components Used
+
 - Navigation bar for branding
 - Form controls for user input
 - Cards for results display
@@ -291,58 +339,71 @@ Mobile (<768px): Touch-optimized buttons, full-screen map
 - Buttons with icon integration
 
 ### Leaflet.js Map Integration
-<p>Map Initialization</p>
-<code>const map = L.map('map').setView([53.3498, -6.2603], 13);
+
+#### Map Initialization
+```javascript
+const map = L.map('map').setView([53.3498, -6.2603], 13);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors',
     maxZoom: 19
 }).addTo(map);
-</code>
+```
 
-### Layer Management:
-<p> The application uses separate layers for different marker types:
-<code> const coffeeLayer = L.layerGroup().addTo(map);  // Brown coffee icons
-const searchLayer = L.layerGroup().addTo(map);  // Search results</code>
+#### Layer Management
 
+The application uses separate layers for different marker types:
+```javascript
+const coffeeLayer = L.layerGroup().addTo(map);  // Brown coffee icons
+const searchLayer = L.layerGroup().addTo(map);  // Search results
+```
 
-### Custom Markers:
-<p> Coffee shop markers use custom div icons:
-<code> const icon = L.divIcon({
+#### Custom Markers
+
+Coffee shop markers use custom div icons:
+```javascript
+const icon = L.divIcon({
     className: 'coffee-marker',
-    html: '<div class="coffee-icon"><i class="fas fa-mug-hot"></i></div>',
+    html: '',
     iconSize: [25, 25],
     iconAnchor: [12.5, 12.5]
 });
-</code>
+```
 
-### Result markers are numbered for easy identification
-<code> const marker = L.divIcon({
-    html: `<div class="nearest-marker">${rank}</div>`,
+Result markers are numbered for easy identification:
+```javascript
+const marker = L.divIcon({
+    html: `${rank}`,
     iconSize: [28, 28]
-});</code>
+});
+```
 
 ### User Interface Components
-<p>Control Panel</p>
+
+#### Control Panel
+
 - Mode selector dropdown (Nearest/Radius/Distance)
 - Dynamic settings based on selected mode
 - Input validation feedback
 - Clear results button
 
-<p>Results Panel </p>
+#### Results Panel
+
 - Collapsible sidebar
 - Scrollable results list
-- Click-to-zoom functionality 
+- Click-to-zoom functionality
 - Distance badges for quick reference
 
-<p>Visual Feedback</p>
+#### Visual Feedback
+
 - Loading states during API calls
 - Error alerts for invalid input
 - Success notifications
 - Animated markers for search points
 
 ### JavaScript Architecture
-<code> document.getElementById('search-mode').addEventListener('change', (e) => {
+```javascript
+document.getElementById('search-mode').addEventListener('change', (e) => {
     currentMode = e.target.value;
     updateUI();
 });
@@ -350,9 +411,10 @@ const searchLayer = L.layerGroup().addTo(map);  // Search results</code>
 map.on('click', (e) => {
     handleMapClick(e.latlng.lat, e.latlng.lng);
 });
+```
 
-
-Asynchronous API Calls
+#### Asynchronous API Calls
+```javascript
 async function findNearest(lat, lng) {
     try {
         const response = await fetch('/coffee/api/nearest/', {
@@ -367,85 +429,93 @@ async function findNearest(lat, lng) {
         alert('Error: ' + error.message);
     }
 }
+```
 
-</code>
-
-### State Management
-<code> let currentMode = 'nearest';
+#### State Management
+```javascript
+let currentMode = 'nearest';
 let distanceModeShops = [];
-let radiusCircle = null;</code>
+let radiusCircle = null;
+```
 
-### Accessibility Features- ARIA Labels
-<code> 
-<button aria-label="Find nearest coffee shops">
+#### Accessibility Features - ARIA Labels
+```html
+
     Search
-</button>
-</code>
 
-# Spatial Query Implementation
+```
+
+---
+
+## 7. Spatial Query Implementation
+
 ### Proximity Search (K-Nearest Neighbors)
-<code>
+```python
 search_point = Point(lng, lat, srid=4326)
 
 nearest_shops = CoffeeShop.objects.annotate(
     distance=Distance('location', search_point)
 ).order_by('distance')[:limit]
-</code>
+```
 
-<p>
-    How It Works
-</p>
- 1. User clicks on map, providing coordinates
-2.  JavaScript sends POST request with lat/lng
+**How It Works:**
+
+1. User clicks on map, providing coordinates
+2. JavaScript sends POST request with lat/lng
 3. Django creates PostGIS Point geometry
-4. Distance() function annotates each shop with calculated distance
+4. `Distance()` function annotates each shop with calculated distance
 5. Results ordered by distance
 6. Response includes distance in km and meters
-<p>Visual Representation</p>
+
+**Visual Representation:**
 - Red marker at search point
 - Green numbered markers for results
 - Results sorted by proximity in sidebar
 
-
 ### Radius Search (Buffer Query)
-<code>search_point = Point(lng, lat, srid=4326)
+```python
+search_point = Point(lng, lat, srid=4326)
 
 shops_in_radius = CoffeeShop.objects.filter(
     location__distance_lte=(search_point, D(km=radius_km))
 ).annotate(
     distance=Distance('location', search_point)
-).order_by('distance')</code>
+).order_by('distance')
+```
 
-<p>
-    How It Works:
-</p>
+**How It Works:**
+
 1. User specifies radius
 2. User clicks map for center point
 3. PostGIS creates circular buffer zone
-4. ST_DWithin() tests if shop locations fall within buffer
+4. `ST_DWithin()` tests if shop locations fall within buffer
 5. Results include all shops meeting criteria
 6. Sorted by distance from center
 
-<p>Visual Representation</p>
+**Visual Representation:**
 - Green circle overlay showing search radius
 - Red center marker
 - Blue numbered markers for shops within radius
 
 ### Distance Calculation Between Two Points
-<code>shop1 = CoffeeShop.objects.get(id=shop1_id)
+```python
+shop1 = CoffeeShop.objects.get(id=shop1_id)
 shop2 = CoffeeShop.objects.get(id=shop2_id)
 
 distance_degrees = shop1.location.distance(shop2.location)
-distance_km = distance_degrees * 111.32  # Convert to kilometers</code>
+distance_km = distance_degrees * 111.32  # Convert to kilometers
+```
 
-<p>How it works</p>
+**How It Works:**
+
 1. User clicks first coffee shop marker
 2. Application stores first selection
 3. User clicks second coffee shop marker
 4. API call with both shop IDs
 5. PostGIS calculates geodesic distance
 6. Response includes multiple units (km, m, miles)
-<p>Visual Representation</p>
+
+**Visual Representation:**
 - Dashed red line connecting two shops
 - Distance displayed in popup
 
