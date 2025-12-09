@@ -621,7 +621,7 @@ document.getElementById('outdoor-filter').addEventListener('change', function() 
 ## Interactive Neighborhood Boundaries
 
 ### Overview
-Clickable polygon overlays representing 24 Dublin neighborhoods, enabling users to filter coffee shops by geographic area and visualize neighborhood density.
+Clickable polygon overlays representing Dublin neighborhoods, enabling users to filter coffee shops by geographic area and visualize neighborhood density.
 
 ### GeoJSON Data Structure
 
@@ -720,11 +720,11 @@ function filterByNeighborhood(neighborhoodName, bounds) {
 ```
 
 ### Coverage
-- **24 Neighborhoods:** Complete Dublin metropolitan area
+- **Neighborhoods:** Complete Dublin metropolitan area
 - **City Center:** Temple Bar, Portobello
 - **South Dublin:** Ballsbridge, Ranelagh, Rathmines, Dundrum
-- **Coastal:** Sandymount, Blackrock, Dun Laoghaire
-- **North Dublin:** Stoneybatter, Phibsborough, Drumcondra, Clontarf
+- **Coastal:** Blackrock, Dun Laoghaire
+- **North Dublin:** Stoneybatter, Phibsborough
 
 ---
 ---
@@ -895,12 +895,7 @@ function displayRouteInfo(route) {
 }
 ```
 
-### Use Cases
-1. **Coffee Crawl Planning:** Weekend exploration of neighborhood
-2. **Tourist Routes:** Efficient sightseeing with coffee breaks
-3. **Photography Tours:** Visit Instagram-worthy cafes
-4. **Business Meetings:** Multiple client visits in one trip
-5. **Time Planning:** Know exact duration before starting
+
 
 - **Optimization:** Near-optimal solution in <1 second for typical use cases
 - **Limitations:** Not guaranteed to find absolute optimal route (NP-hard problem)
