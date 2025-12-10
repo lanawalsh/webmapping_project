@@ -1157,6 +1157,8 @@ docker-compose down
 ```
 ![Screenshot 2025-12-08 233403](https://github.com/user-attachments/assets/e1e28331-8a24-4024-aec0-a2406deda4ef)
 ![Screenshot 2025-12-08 234301](https://github.com/user-attachments/assets/f26f0c5a-9d8c-4abd-a3e8-f9061e5d58b8)
+![Screenshot 2025-12-10 110049](https://github.com/user-attachments/assets/c0ce76d9-60a8-44b7-a234-84cd7a9dd870)
+
 
 
 ---
@@ -1450,6 +1452,7 @@ if not (-180 <= lng <= 180):
 <p>Radius Validation</p>
 <code>if radius_km <= 0 or radius_km > 20:
     return Response({'error': 'Invalid radius'}, status=400)</code>
+    <p>removed code from env before commiting code</p>
 
 ### CSRF Protection
 <code> @csrf_exempt  # Disabled for development
